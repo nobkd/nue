@@ -16,10 +16,10 @@ jobs:
           - { os: 'ubuntu-22.04', tool: 'bun' }
           - { os: 'macos-12', tool: 'bun' }
           # Windows support for bun install is not implemented yet
-          # - { os: 'windows-2022', tool: 'bun' }
+          - { os: 'windows-2022', tool: 'bun' }
           # - { os: 'ubuntu-22.04', tool: 'node+jest' }
           # - { os: 'macos-12', tool: 'node+jest' }
-          - { os: 'windows-2022', tool: 'node+jest' }
+          # - { os: 'windows-2022', tool: 'node+jest' }
     runs-on: ${{ matrix.env.os }}
     steps:
       - uses: actions/checkout@v3
