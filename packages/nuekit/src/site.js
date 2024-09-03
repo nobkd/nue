@@ -357,7 +357,9 @@ export async function createSite(args) {
     let { dir, name, base, ext } = parsePath(url.slice(1))
     if (!name) name = 'index'
 
-    const try_files = [[dir, name, 'md']]
+    const parts = dir.split('/')
+    const pretty = [parts.slice(0, -1).join('/'), parts.slice(-1)[0]]
+    const try_files = [[dir, name, 'md'], [...pretty, 'md'], [...pretty, 'html']]
 
     // SPA page
     if (!ext || name == 'index') {
@@ -367,8 +369,9 @@ export async function createSite(args) {
     }
 
     // custom 404 page
-    try_files.push(['', 404, 'md'])
+    try_files.push(['404', 'index', 'md'])
 
+    console.log(try_files)
 
     for (const [dir, name, ext] of try_files) {
       const src = join(dir, `${name}.${ext}`)

@@ -206,7 +206,7 @@ export async function createKit(args) {
     if (file.is_md) {
       const { dir, name, path } = file
       const html = await renderMPA(path)
-      await write(html, dir, `${name}.html`)
+      await write(html, join(dir, name != 'index' ? name : ''), 'index.html')
       active_page = file
       return { html }
     }
@@ -324,6 +324,7 @@ export async function createKit(args) {
 
     const server = createServer(dist, async (req_url) => {
       const { src, path, name } = await site.getRequestPaths(req_url) || {}
+      console.log(src, path, name)
       if (src) await gen(src)
       return { path, code: name == 404 ? 404 : 200 }
     })

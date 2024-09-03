@@ -40,7 +40,7 @@ export function createServer(root, callback) {
       })
     }
 
-    let [url, _] = req.url.split('?')
+    let [ url, ..._ ] = req.url.split(/[#?]/)
     let ext = extname(url).slice(1)
 
     if (!ext) {
