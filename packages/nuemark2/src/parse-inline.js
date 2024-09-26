@@ -1,4 +1,3 @@
-
 /* Inline tokenizer */
 import { parseTag, parseAttr } from './parse-tag.js'
 
@@ -88,6 +87,7 @@ const PARSERS = [
   }
 ]
 
+
 export function parseInline(str) {
   const tokens = []
 
@@ -149,6 +149,3 @@ export function parseLinkTitle(href) {
   }
   return { href }
 }
-
-
-

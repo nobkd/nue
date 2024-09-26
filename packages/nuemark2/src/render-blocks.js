@@ -1,17 +1,17 @@
-
-import { renderInline, renderTokens } from './render-inline.js'
-import { parseLinkTitle } from './parse-inline.js'
-import { parseBlocks } from './parse-blocks.js'
-import { renderTag, wrap } from './render-tag.js'
-import { elem } from './document.js'
 import { glow } from 'nue-glow'
+
+import { elem } from './document.js'
+import { parseBlocks } from './parse-blocks.js'
+import { parseLinkTitle } from './parse-inline.js'
+import { renderInline, renderTokens } from './render-inline.js'
+import { renderTag, wrap } from './render-tag.js'
 
 
 export function renderLines(lines, opts) {
   return renderBlocks(parseBlocks(lines), opts)
 }
 
-export function renderBlocks(blocks, opts={}) {
+export function renderBlocks(blocks, opts = {}) {
   opts.reflinks = parseReflinks({ ...blocks.reflinks, ...opts?.data?.links })
   return blocks.map(b => renderBlock(b, opts)).join('\n')
 }
@@ -23,14 +23,14 @@ function renderBlock(block, opts) {
 
   return block.is_content ? renderContent(block.content, opts) :
     block.is_heading ? renderHeading(block, opts) :
-    block.is_quote ? elem('blockquote', renderBlocks(block.blocks, opts)) :
-    block.is_tag ? renderTag(block, opts) :
-    block.is_table ? renderTable(block, opts) :
-    block.is_list ? renderList(block, opts) :
-    block.is_code ? renderCode(block) :
-    block.is_newline ? '' :
-    block.is_break ? '<hr>' :
-    console.error('Unknown block', block)
+      block.is_quote ? elem('blockquote', renderBlocks(block.blocks, opts)) :
+        block.is_tag ? renderTag(block, opts) :
+          block.is_table ? renderTable(block, opts) :
+            block.is_list ? renderList(block, opts) :
+              block.is_code ? renderCode(block) :
+                block.is_newline ? '' :
+                  block.is_break ? '<hr>' :
+                    console.error('Unknown block', block)
 }
 
 
@@ -47,9 +47,9 @@ function parseReflinks(links) {
   return links
 }
 
-export function renderHeading(h, opts={}) {
+export function renderHeading(h, opts = {}) {
   const ids = opts.heading_ids
-  const a = ids ? elem('a', { href: `#${ h.attr.id }`, title: h.text }) : ''
+  const a = ids ? elem('a', { href: `#${h.attr.id}`, title: h.text }) : ''
   if (!ids) delete h.attr.id
 
   return elem('h' + h.level, h.attr, a + renderTokens(h.tokens, opts))
@@ -64,11 +64,11 @@ function renderCode({ name, code, attr, data }) {
   const { numbered } = data
   const klass = attr.class
   delete attr.class
-  const pre = elem('pre', attr, glow(code, { language: name, numbered}))
+  const pre = elem('pre', attr, glow(code, { language: name, numbered }))
   return wrap(klass, pre)
 }
 
-export function renderTable({ rows, attr, head=true }, opts) {
+export function renderTable({ rows, attr, head = true }, opts) {
 
   const html = rows.map((row, i) => {
     const cells = row.map(td => elem(head && !i ? 'th' : 'td', renderInline(td, opts)))
@@ -77,4 +77,3 @@ export function renderTable({ rows, attr, head=true }, opts) {
 
   return elem('table', attr, html.join('\n'))
 }
-

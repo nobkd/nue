@@ -1,9 +1,9 @@
-
-import { renderBlocks, renderTable, renderContent } from './render-blocks.js'
-import { renderInline } from './render-inline.js'
-import { categorize, elem } from './document.js'
 import { readFileSync } from 'node:fs'
 import { join } from 'node:path'
+
+import { categorize, elem } from './document.js'
+import { renderInline } from './render-inline.js'
+import { renderBlocks, renderTable } from './render-blocks.js'
 
 
 // built-in tags
@@ -28,7 +28,7 @@ const TAGS = {
 
   image() {
     const { attr, data } = this
-    const { caption, href, loading='lazy' } = data
+    const { caption, href, loading = 'lazy' } = data
     const src = data.src || data._ || data.large
     const alt = data.alt || caption
 
@@ -87,7 +87,7 @@ const TAGS = {
   }
 }
 
-export function renderTag(tag, opts={}) {
+export function renderTag(tag, opts = {}) {
   const tags = opts.tags = { ...TAGS, ...opts?.tags }
   const { name, attr, blocks } = tag
   const fn = tags[name]
@@ -132,13 +132,13 @@ const MIME = {
   mp4: 'video/mp4',
 }
 
-function getMimeType(path='') {
+function getMimeType(path = '') {
   const type = path.slice(path.lastIndexOf('.') + 1)
   return MIME[type] || `image/${type}`
 }
 
 export function createPicture(img_attr, data) {
-  const { small, offset=750 } = data
+  const { small, offset = 750 } = data
 
   const sources = [small, img_attr.src].map(src => {
     const prefix = src == small ? 'max' : 'min'
@@ -155,8 +155,8 @@ function getListItems(arr) {
 }
 
 export function parseSize(data) {
-  const { size='' } = data
-  const [ w, h ] = size.trim().split(/\s*\D\s*/)
+  const { size = '' } = data
+  const [w, h] = size.trim().split(/\s*\D\s*/)
   return { width: w || data.width, height: h || data.height }
 }
 
@@ -188,7 +188,7 @@ export function wrap(name, html) {
 
 
 function getInnerHTML(blocks = [], opts) {
-  const [ first, second ] = blocks
+  const [first, second] = blocks
   if (!first) return ''
   const { content } = first
   return content && !second ? renderInline(content.join(' '), opts) : renderBlocks(blocks, opts)
@@ -197,7 +197,5 @@ function getInnerHTML(blocks = [], opts) {
 export function renderIsland({ name, attr, data }) {
   const json = !Object.keys(data)[0] ? '' :
     elem('script', { type: 'application/json' }, JSON.stringify(data))
-  ;
   return elem(name, { 'custom': true, ...attr }, json)
 }
-

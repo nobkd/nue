@@ -1,8 +1,9 @@
+import { load as parseYAML } from 'js-yaml'
 
+import { parseBlocks } from './parse-blocks.js'
 import { parseLinkTitle } from './parse-inline.js'
 import { renderBlocks } from './render-blocks.js'
-import { parseBlocks } from './parse-blocks.js'
-import { load as parseYAML } from 'js-yaml'
+
 
 export function parseDocument(lines) {
   const user_meta = stripMeta(lines)
@@ -47,12 +48,12 @@ export function parseDocument(lines) {
       return html.join('\n\n')
     },
 
-    renderTOC(attr={}) {
+    renderTOC(attr = {}) {
       const navs = api.sections.map(renderNav).join('\n').trim()
       return elem('div', { 'aria-label': 'Table of contents', ...attr }, navs)
     },
 
-    render(opts={}) {
+    render(opts = {}) {
       let { sections } = opts.data || {}
       if (sections && !Array.isArray(sections)) sections = []
       return sections ? api.renderSections(sections, opts) : renderBlocks(blocks, opts)
@@ -63,7 +64,7 @@ export function parseDocument(lines) {
 }
 
 
-export function categorize(blocks=[], max_level=2) {
+export function categorize(blocks = [], max_level = 2) {
   const arr = []
   let section
 
@@ -83,7 +84,7 @@ export function categorize(blocks=[], max_level=2) {
 
 function renderNav(blocks) {
   const headings = blocks.filter(b => [2, 3].includes(b.level))
-  const links = headings.map(h => elem('a', { href: `#${ h.attr.id }` }, h.text))
+  const links = headings.map(h => elem('a', { href: `#${h.attr.id}` }, h.text))
   return links[0] ? elem('nav', links.join('\n')) : ''
 }
 
@@ -132,9 +133,7 @@ function renderAttrs(attr) {
   const arr = []
   for (const key in attr) {
     const val = attr[key]
-    if (val) arr.push(val === true ? key :`${key}="${val}"`)
+    if (val) arr.push(val === true ? key : `${key}="${val}"`)
   }
   return arr[0] ? ' ' + arr.join(' ') : ''
 }
-
-

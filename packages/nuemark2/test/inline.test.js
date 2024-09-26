@@ -1,6 +1,5 @@
-
+import { parseInline, parseLink } from '../src/parse-inline.js'
 import { renderTokens, renderToken, renderInline } from '../src/render-inline.js'
-import { parseInline, parseLink } from '../src//parse-inline.js'
 
 
 test('plain text', () => {
@@ -32,7 +31,7 @@ test('formatting', () => {
   ]
 
   for (test of tests) {
-    const [ chars, body, tag ] = test
+    const [chars, body, tag] = test
     const ret = parseInline(`A ${chars + body + chars} here`)
     expect(ret[1].tag).toBe(tag)
     expect(ret[1].body).toBe(body)
@@ -132,13 +131,13 @@ test('inline tag', () => {
 })
 
 test('inline tag', () => {
-  const [ tag, and, link] = parseInline('[tip] and [link][foo]')
+  const [tag, and, link] = parseInline('[tip] and [link][foo]')
   expect(tag.is_tag).toBeTrue()
   expect(link.is_reflink).toBeTrue()
 })
 
 test('tag args', () => {
-  const [ text, comp, rest] = parseInline('Hey [print foo] thing')
+  const [text, comp, rest] = parseInline('Hey [print foo] thing')
   expect(comp.name).toBe('print')
   expect(comp.data.foo).toBeTrue()
 })
@@ -160,4 +159,3 @@ test('{ #foo.bar }', () => {
   const text = renderTokens(tokens)
   expect(text.trim()).toEqual('Hey')
 })
-

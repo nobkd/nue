@@ -1,9 +1,10 @@
-
 import { load as parseYAML } from 'js-yaml'
+
 import { parseInline } from './parse-inline.js'
 import { parseTag } from './parse-tag.js'
 
-export function parseBlocks(lines, reflinks={}) {
+
+export function parseBlocks(lines, reflinks = {}) {
   let spaces, block
   const blocks = []
 
@@ -67,7 +68,7 @@ export function parseBlocks(lines, reflinks={}) {
 
       // new list
       if (!block?.is_list) {
-        block = { is_list: true, numbered, entries: [[ line ]] }
+        block = { is_list: true, numbered, entries: [[line]] }
         return blocks.push(block)
 
       // new list item
@@ -235,5 +236,3 @@ function addListEntry({ entries }, line) {
   const last = entries[entries.length - 1]
   last.push(line)
 }
-
-

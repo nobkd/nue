@@ -1,5 +1,5 @@
-
 import { parseDocument, stripMeta } from '../src/document.js'
+
 
 test('front matter', () => {
   const lines = ['---', 'foo: 10', 'bar: 20', '---', '# Hello']
@@ -64,5 +64,3 @@ test('table of contents', () => {
   expect(toc).toInclude('<nav><a href="#foo">Foo</a></nav>')
   expect(toc).toInclude('<nav><a href="#baz">Baz</a></nav>')
 })
-
-

@@ -1,4 +1,3 @@
-
 import { parseTag, valueGetter, parseAttr, parseSpecs } from '../src/parse-tag.js'
 import { renderLines } from '../src/render-blocks.js'
 
@@ -22,7 +21,7 @@ test('parseSpecs', () => {
 })
 
 test('parse plain args', () => {
-  const { name, data }= parseTag('video src="/a.mp4" loop muted')
+  const { name, data } = parseTag('video src="/a.mp4" loop muted')
   expect(name).toBe('video')
   expect(data.loop).toBe(true)
   expect(data.muted).toBe(true)
@@ -44,7 +43,7 @@ test('parse all', () => {
 // custom tags
 const tags = {
   print(data) {
-    return `<b>${ data?.value }</b>`
+    return `<b>${data?.value}</b>`
   },
 }
 
@@ -92,7 +91,7 @@ test('[list] sections', () => {
 
 // list items
 test('[list] items', () => {
-  const content = ['[list]', '  * foo', '  * bar' ]
+  const content = ['[list]', '  * foo', '  * bar']
   const html = renderLines(content)
   expect(html).toStartWith('<ul><li><p>foo</p></li>')
   expect(html).toEndWith('<li><p>bar</p></li></ul>')
@@ -133,7 +132,7 @@ test('client-side island', () => {
 
 
 test('[table] tag', () => {
-  const foo = [ ['Foo', 'Buzz'], ['hey', 'girl']]
+  const foo = [['Foo', 'Buzz'], ['hey', 'girl']]
   const opts = { data: { foo } }
 
   const html = renderLines(['[table :rows="foo"]'], opts)
