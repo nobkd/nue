@@ -17,11 +17,8 @@ export async function getJsBuilder(is_esbuild) {
 }
 
 export async function getCssBuilder(is_lcss) {
-  if (!typeof jest && cssBuilder) return cssBuilder
-
   try {
-    cssBuilder = is_lcss ? await import(resolve('lightningcss', `file://${process.cwd()}/`)) : Bun
-    return cssBuilder
+    return is_lcss ? await import(resolve('lightningcss', `file://${process.cwd()}/`)) : Bun
   } catch {
     throw 'CSS bundler not found. Please use Bun>=1.1.30 or install lightningcss'
   }
@@ -91,7 +88,7 @@ export async function lightningCSS(filename, minify, opts = {}) {
   const is_lcss = opts.lcss || !process.isBun
   let builder = await getCssBuilder(is_lcss)
 
-  let include
+  let include = 0
   if (is_lcss) {
     include = builder.Features.Colors
     if (opts.native_css_nesting) include |= builder.Features.Nesting
@@ -103,14 +100,14 @@ export async function lightningCSS(filename, minify, opts = {}) {
     } else {
       const result = (await builder.build({ entrypoints: [filename], minify, experimentalCss: true }))
 
-      if (!result?.success) {
-        const log = result?.logs[0]
-        throw { fileName: filename, loc: log?.position, data: { text: log?.message } }
+      if (!result.success) {
+        const log = result.logs[0]
+        throw { fileName: filename, loc: log.position, data: { text: log.message } }
       }
 
       return await result?.outputs[0]?.text()
     }
-  } catch ({ fileName, loc, data }) {
+  } catch ({ fileName, loc, data, lineText }) {
     throw {
       title: 'CSS syntax error',
       lineText: loc.lineText || (await fs.readFile(fileName, 'utf-8')).split(/\r\n|\r|\n/)[loc.line - 1],
