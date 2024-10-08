@@ -23,7 +23,7 @@ export function expandArgs(args) {
 // TODO: tests
 export function getArgs(argv) {
   const commands = ['serve', 'build', 'init', 'create']
-  const args = { paths: [], root: null, lcss: true }
+  const args = { paths: [], root: null }
   const checkExecutable = /[\\\/]nue(\.(cmd|ps1|bunx|exe))?$/
   let opt
 
@@ -49,7 +49,7 @@ export function getArgs(argv) {
       else if (['-h', '--help'].includes(arg)) args.help = true
       else if (['-v', '--verbose'].includes(arg)) args.verbose = true
       else if (['-b', '--esbuild'].includes(arg)) args.esbuild = true
-      else if (['-l', '--no-lcss'].includes(arg)) args.lcss = false
+      else if (['-l', '--lcss'].includes(arg)) args.lcss = true
       else if (['-d', '--deploy'].includes(arg)) args.deploy = args.is_prod = true
       else if (['-I', '--incremental'].includes(arg)) args.incremental = true
 
