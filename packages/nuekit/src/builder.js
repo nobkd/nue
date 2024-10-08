@@ -17,8 +17,11 @@ export async function getJsBuilder(is_esbuild) {
 }
 
 export async function getCssBuilder(is_lcss) {
+  if (!typeof jest && cssBuilder) return cssBuilder
+
   try {
-    return is_lcss ? await import(resolve('lightningcss', `file://${process.cwd()}/`)) : Bun
+    cssBuilder = is_lcss ? await import(resolve('lightningcss', `file://${process.cwd()}/`)) : Bun
+    return cssBuilder
   } catch {
     throw 'CSS bundler not found. Please use Bun>=1.1.30 or install lightningcss'
   }
@@ -85,10 +88,11 @@ export function parseError(buildResult) {
 }
 
 export async function lightningCSS(filename, minify, opts = {}) {
-  const is_lcss = opts.lcss || !process.isBun
+  // const is_lcss = opts.lcss || !process.isBun
+  const is_lcss = true
   let builder = await getCssBuilder(is_lcss)
 
-  let include = 0
+  let include
   if (is_lcss) {
     include = builder.Features.Colors
     if (opts.native_css_nesting) include |= builder.Features.Nesting
@@ -107,7 +111,7 @@ export async function lightningCSS(filename, minify, opts = {}) {
 
       return await result?.outputs[0]?.text()
     }
-  } catch ({ fileName, loc, data, lineText }) {
+  } catch ({ fileName, loc, data }) {
     throw {
       title: 'CSS syntax error',
       lineText: loc.lineText || (await fs.readFile(fileName, 'utf-8')).split(/\r\n|\r|\n/)[loc.line - 1],
