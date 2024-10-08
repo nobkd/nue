@@ -4,21 +4,28 @@ import { promises as fs } from 'node:fs'
 import { join } from 'node:path'
 
 import { resolve } from 'import-meta-resolve'
-import { Features, bundleAsync } from 'lightningcss'
 
 
-export async function getBuilder(is_esbuild) {
+export async function getJsBuilder(is_esbuild) {
   try {
     return is_esbuild ? await import(resolve('esbuild', `file://${process.cwd()}/`)) : Bun
   } catch {
-    throw 'Bundler not found. Please use Bun or install esbuild'
+    throw 'JS bundler not found. Please use Bun or install esbuild'
+  }
+}
+
+export async function getCssBuilder(is_lcss) {
+  try {
+    return is_lcss ? await import(resolve('lightningcss', `file://${process.cwd()}/`)) : Bun
+  } catch {
+    throw 'CSS bundler not found. Please use Bun>=1.1.30 or install lightningcss'
   }
 }
 
 export async function buildJS(args) {
   const { outdir, toname, minify, bundle } = args
   const is_esbuild = args.esbuild || !process.isBun
-  const builder = await getBuilder(is_esbuild)
+  const builder = await getJsBuilder(is_esbuild)
   let ret
 
   const opts = {
@@ -76,15 +83,32 @@ export function parseError(buildResult) {
 }
 
 export async function lightningCSS(filename, minify, opts = {}) {
-  let include = Features.Colors
-  if (opts.native_css_nesting) include |= Features.Nesting
+  const is_lcss = opts.lcss || !process.isBun
+  let builder = await getCssBuilder(is_lcss)
+
+  let include = 0
+  if (is_lcss) {
+    include = builder.Features.Colors
+    if (opts.native_css_nesting) include |= builder.Features.Nesting
+  }
 
   try {
-    return (await bundleAsync({ filename, include, minify })).code?.toString()
-  } catch ({ fileName, loc, data }) {
+    if (is_lcss) {
+      return (await builder.bundleAsync({ filename, include, minify })).code?.toString()
+    } else {
+      const result = (await builder.build({ entrypoints: [filename], minify, experimentalCss: true }))
+
+      if (!result.success) {
+        const log = result.logs[0]
+        throw { fileName: filename, loc: log.position, data: { text: log.message } }
+      }
+
+      return await result?.outputs[0]?.text()
+    }
+  } catch ({ fileName, loc, data, lineText }) {
     throw {
       title: 'CSS syntax error',
-      lineText: (await fs.readFile(fileName, 'utf-8')).split(/\r\n|\r|\n/)[loc.line - 1],
+      lineText: loc.lineText || (await fs.readFile(fileName, 'utf-8')).split(/\r\n|\r|\n/)[loc.line - 1],
       text: data.type,
       ...loc
     }
