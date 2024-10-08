@@ -23,7 +23,7 @@ export function expandArgs(args) {
 // TODO: tests
 export function getArgs(argv) {
   const commands = ['serve', 'build', 'init', 'create']
-  const args = { paths: [], root: null, lcss: true }
+  const args = { paths: [], root: null }
   const checkExecutable = /[\\\/]nue(\.(cmd|ps1|bunx|exe))?$/
   let opt
 
