@@ -91,8 +91,7 @@ export function parseError(buildResult) {
 }
 
 export async function lightningCSS(filename, minify, opts = {}) {
-  // const is_lcss = opts.lcss || !process.isBun
-  const is_lcss = true
+  const is_lcss = opts.lcss || !process.isBun
   let builder = await getCssBuilder(is_lcss)
 
   let include
@@ -107,9 +106,9 @@ export async function lightningCSS(filename, minify, opts = {}) {
     } else {
       const result = (await builder.build({ entrypoints: [filename], minify, experimentalCss: true }))
 
-      if (!result.success) {
-        const log = result.logs[0]
-        throw { fileName: filename, loc: log.position, data: { text: log.message } }
+      if (!result?.success) {
+        const log = result?.logs[0]
+        throw { fileName: filename, loc: log?.position, data: { text: log?.message } }
       }
 
       return await result?.outputs[0]?.text()
