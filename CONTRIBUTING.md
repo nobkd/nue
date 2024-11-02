@@ -89,6 +89,7 @@ nue
 cd your-projects-dir
 git clone git@github.com:nuejs/nue.git
 cd nue
+node setup-npm.js #  prepare local dev env
 npm install
 cd packages/nuekit
 npm link

@@ -48,6 +48,7 @@ jobs:
       - name: Install and test with Node
         run: |
           node -v && npm -v
+          node setup-npm.js
           npm install --no-save jest jest-extended
           npm test -- --coverage
         if: ${{ matrix.tool == 'node+jest' }}
