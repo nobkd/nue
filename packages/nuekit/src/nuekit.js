@@ -11,7 +11,7 @@ import { initNueDir } from './init.js'
 import { createSite } from './site.js'
 import { fswatch } from './nuefs.js'
 
-import { log, colors, getAppDir, parsePathParts, extendData } from './util.js'
+import { log, colors, getAppDir, parsePathParts, extendData, openUrl } from './util.js'
 import { renderPage, getSPALayout } from './layout/page.js'
 
 
@@ -353,7 +353,9 @@ export async function createKit(args) {
 
     try {
       server.listen(port)
-      log(`http://localhost:${port}/`)
+      const url = `http://localhost:${port}/`
+      log(url)
+      if (args.show) openUrl(url)
       return terminate
 
     } catch (e) {

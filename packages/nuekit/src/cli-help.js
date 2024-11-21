@@ -1,4 +1,4 @@
-import { colors, openUrl, getVersion } from './util.js'
+import { colors, getVersion } from './util.js'
 
 const HELP = `
 Usage
@@ -38,7 +38,7 @@ Examples
   nue build .md .css
 
   # more examples
-  ${openUrl} https://nuejs.org/docs/command-line-interface.html
+  https://nuejs.org/docs/command-line-interface.html
 
  ┏━┓┏┓┏┳━━┓
  ┃┏┓┫┃┃┃┃━┫  ${await getVersion()}

@@ -4,7 +4,7 @@ import { sep } from 'node:path'
 
 import esMain from 'es-main'
 
-import { log, colors, getVersion, getEngine } from './util.js'
+import { log, colors, getVersion, getEngine, openUrl } from './util.js'
 
 
 // [-npe] --> [-n, -p, -e]
@@ -51,6 +51,7 @@ export function getArgs(argv) {
       else if (['-b', '--esbuild'].includes(arg)) args.esbuild = true
       else if (['-d', '--deploy'].includes(arg)) args.deploy = args.is_prod = true
       else if (['-I', '--incremental'].includes(arg)) args.incremental = true
+      else if (['-s', '--show'].includes(arg)) args.show = true
 
       // string values
       else if (['-e', '--environment'].includes(arg)) opt = 'env'

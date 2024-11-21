@@ -1,5 +1,6 @@
 /* misc stuff. think shame.css */
 
+import { execSync } from 'node:child_process'
 import { promises as fs } from 'node:fs'
 import { sep, parse, normalize, join, isAbsolute, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
@@ -7,7 +8,10 @@ import { fileURLToPath } from 'node:url'
 
 export const srcdir = dirname(fileURLToPath(import.meta.url))
 
-export const openUrl = process.platform == 'darwin' ? 'open' : process.platform == 'win32' ? 'start' : 'xdg-open'
+export function openUrl(url) {
+  const open = process.platform == 'darwin' ? 'open' : process.platform == 'win32' ? 'start' : 'xdg-open'
+  execSync(`${open} ${url}`)
+}
 
 // read from package.json
 export async function getVersion() {

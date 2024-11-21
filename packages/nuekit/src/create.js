@@ -11,7 +11,7 @@ async function serve(root, port, debug) {
   const terminate = await nue.serve()
 
   // open welcome page
-  if (!debug) execSync(`${openUrl} http://localhost:${nue.port}/welcome/`)
+  if (!debug) openUrl(`http://localhost:${nue.port}/welcome/`)
   return terminate
 }
 
