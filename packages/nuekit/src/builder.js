@@ -16,14 +16,15 @@ export async function getJsBuilder(is_esbuild) {
   }
 }
 
+let cssBuilder
 export async function getCssBuilder(is_lcss) {
-  if (!typeof jest && cssBuilder) return cssBuilder
+  if (cssBuilder) return cssBuilder
 
   try {
     cssBuilder = is_lcss ? await import(resolve('lightningcss', `file://${process.cwd()}/`)) : Bun
     return cssBuilder
   } catch {
-    throw 'CSS bundler not found. Please use Bun>=1.1.30 or install lightningcss'
+    throw 'CSS bundler not found. Please use Bun>=1.1.37 or install lightningcss'
   }
 }
 
