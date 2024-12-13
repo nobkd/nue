@@ -169,7 +169,7 @@ This expanded capability allows you to reference full concepts or phrases, impro
 
 
 ### Sections
-You can split your content into sections with a triple dash `---` making your content render like this:
+You can split your content into sections with a triple plus `+++` making your content render like this:
 
 ```
 <article>
@@ -184,7 +184,7 @@ You can also generate the sections by setting `sections: true` in your configura
 
 [.note]
   ### Horizontal rules
-  Please use `***`, `___`, or `- - -` to generate a horizontal rule (`<hr>` tag).
+  Please use `***`, `___`, or `---` to generate a horizontal rule (`<hr>` tag).
 
 Sections are discussed in more detail in the [styling](styling.html#sections) document.
 
@@ -289,7 +289,7 @@ And when styled with CSS, it takes on a visually structured layout:
 [render]
 
 #### Separator
-Nue automatically uses the first `h2` or `h3` tag within a block as the **separator** for the content blocks. If needed, you can use a **triple-dash** (`---`) as an explicit separator to customize content divisions.
+Nue automatically uses the first `h2` or `h3` tag within a block as the **separator** for the content blocks. If needed, you can use a **triple-plus** (`+++`) as an explicit separator to customize content divisions.
 
 For example:
 
@@ -298,7 +298,7 @@ For example:
   ### Design
   Design blends form and function.
 
-  ---
+  +++
 
   ### Engineering
   Code enhances the user experience while staying performant.

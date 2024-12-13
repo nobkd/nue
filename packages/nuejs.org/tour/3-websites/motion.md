@@ -8,6 +8,6 @@
     href: motion-demo.html
 
 
-  ---
+  +++
 
   [! /tour/img/simple-blog-hero.png ]

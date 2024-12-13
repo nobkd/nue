@@ -122,9 +122,9 @@ These layout modules use a straightforward [template language](template-syntax.h
 The front page (`index.md`) displays a list of blog entries:
 
 ```md
----
+\---
 content_collection: blog
----
+\---
 
 # Minimalist, UX developer, designer, urban explorer.
 I’m Emma Bennett, a user experience developer from Berlin.

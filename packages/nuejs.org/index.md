@@ -49,7 +49,7 @@ Nue is an ambitious project aiming to address the key issues in the frontend eco
 [.heroquote]
   [! /home/img/elliot-jay-stocks.jpg]
 
-  ---
+  +++
   It's exciting to see Nue restoring the power of semantic CSS! Separating markup from presentation is something every web developer once believed in, and Nue is making that possible again.
 
   [Elliot Jay Stocks](//elliotjaystocks.com/) /

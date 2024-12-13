@@ -1,4 +1,3 @@
-
 ---
 hero_title: "*Nue 1.0 (RC)* — Can it outshine Next.js?"
 title: "A better Next.js? • Nue 1.0 (RC) is out"
@@ -134,7 +133,7 @@ The new parser introduces several powerful features to enhance your Markdown exp
 
 - **Explicit heading IDs and class names**: You can now define custom IDs and class names for headings using the syntax `## Hello { #world.epic }`, making it easier to add specific styles or create anchor links for better navigation.
 
-- **Automatic section splitting**: Documents will now automatically split into sections by analyzing the document’s structure. When an `h2` or `---` is encountered, a new section is created, making it easier to organize and navigate large documents.
+- **Automatic section splitting**: Documents will now automatically split into sections by analyzing the document’s structure. When an `h2` or `+++` is encountered, a new section is created, making it easier to organize and navigate large documents.
 
 - **Inline components**: Custom tags can now be inlined directly within the content, like `A inlined [custom-tag] is here`. This allows you to add dynamic or reusable components within the text flow, offering more flexibility in structuring your content.
 
@@ -181,7 +180,7 @@ Full list of improvements and breaking changes on this release:
 
   ## Breaking changes
 
-  - **No more `[grid]` tag**: The `[grid]` tag has been removed. You can now achieve similar functionality using generic blocks like `[.features]`, and split inner blocks with `h2`, `h3`, or `---`.
+  - **No more `[grid]` tag**: The `[grid]` tag has been removed. You can now achieve similar functionality using generic blocks like `[.features]`, and split inner blocks with `h2`, `h3`, or `+++`.
 
   - **No more `[code]` tag**: The `[code]` tag has been removed. Extra configurations, such as line numbering, can now be specified directly after the fenced code operator. This simplifies the syntax and aligns more closely with standard Markdown.
 
@@ -197,7 +196,7 @@ Full list of improvements and breaking changes on this release:
 
   - **"Complementary" layout module renamed to "beside"**: The "complementary" layout module has been renamed to "beside." This new name better reflects its purpose of providing additional content beside the main content area, enhancing readability and organization.
 
-  - **`===` no longer works as a section separator**: The `===` syntax for section separation is no longer supported. Instead, use `---` for section separators, and `***` or `___` for thematic breaks (which correspond to the `<hr>` tag in HTML). This change ensures consistency and follows standard Markdown conventions.
+  - **`===` no longer works as a section separator**: The `===` syntax for section separation is no longer supported. Instead, use `+++` for section separators, and `***` or `___` or `---` for thematic breaks (which correspond to the `<hr>` tag in HTML). This change ensures consistency and follows standard Markdown conventions.
 
   - **`[image]` "srcset" removed**: The `srcset` and `sizes` parameters for the `[image]` tag have been removed due to their complexity. A simpler and more powerful system for responsive images is planned for future releases.
 

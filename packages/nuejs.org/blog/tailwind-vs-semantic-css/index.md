@@ -13,7 +13,7 @@ This study compares two websites with similar design: The commercial Spotlight t
     href: //spotlight.tailwindui.com/
     small: img/tw-home.png
     large: img/tw-home-big.png
-  ---
+  +++
   [image]
     href: /@spotlight/ # TODO: fix
     large: img/nue-home-big.png
@@ -124,7 +124,7 @@ Here's a better example. Let's look at the "Uses" or "Setup" page on both implem
     small: img/tw-uses.png
     large: img/tw-uses-big.png
     caption: Tailwind UI version →
-  ---
+  +++
   [image]
     href: /@spotlight/setup/ # TODO: fix
     large: img/nue-uses-big.png

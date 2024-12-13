@@ -120,9 +120,9 @@ Let’s walk through how to set up this system.
 First, we define the different sections of our page in the front matter. In this example, we create a page that is split into the following sections: `hero`, `explainer`, and `backstory`:
 
 ```md
----
+\---
 sections: [hero, explainer, backstory]
----
+\---
 
 # UX development
 Hello, world! Introducing...
