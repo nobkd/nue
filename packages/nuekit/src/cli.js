@@ -1,8 +1,7 @@
 #!/usr/bin/env bun
 
 import { sep } from 'node:path'
-
-import esMain from 'es-main'
+import { pathToFileURL } from 'node:url'
 
 import { log, colors, getVersion, getEngine } from './util.js'
 
@@ -147,4 +146,5 @@ export async function run() {
 }
 
 // Only run main when called as real CLI
-if (esMain(import.meta)) await run()
+if (import.meta.url === pathToFileURL(process.argv[1]).href) await run()
+

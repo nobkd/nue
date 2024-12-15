@@ -1,7 +1,7 @@
 #!/usr/bin/env bun
 
-import esMain from 'es-main'
+import { pathToFileURL } from 'node:url'
 
 import { run } from './cli.js'
 
-if (esMain(import.meta)) await run()
+if (import.meta.url === pathToFileURL(process.argv[1]).href) await run()
