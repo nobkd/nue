@@ -19,7 +19,8 @@ export async function findUserData() {
   // data.base = null // set, if not on <username>.github.io but <username>.github.io/<somedir>
 
   // check if repo already exists, etc.
-  fetch(`https://api.github.com/repos/${data.user}/${data.repo}`)
+  // fetch(`https://api.github.com/repos/${data.user}/${data.repo}`)
+  // or git ls-remote --exit-code git@github.com:johndoe/my-cool-repo.git
 
   // more
 
