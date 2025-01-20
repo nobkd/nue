@@ -20,7 +20,7 @@ export function expandArgs(args) {
 
 // TODO: tests
 export function getArgs(argv) {
-  const commands = ['serve', 'build', 'init', 'create', 'docs']
+  const commands = ['serve', 'build', 'init', 'create', 'push', 'docs']
   const args = { paths: [], root: null }
   let opt
 
@@ -101,6 +101,18 @@ async function runCommand(args) {
   if (cmd == 'create') {
     const { create } = await import('./create.js')
     return await create({ ...args, root, port })
+  } else if (cmd == 'push') {
+    const { findUserData, push } = await import('./push.js')
+
+    // load user data, ask user to confirm data
+    const data = await findUserData()
+
+    // build site
+    const nue = await createKit({ ...args, ...data })
+    await nue.build(args.paths)
+
+    // push site to remote
+    await push(data, nue.dist)
   }
 
   const nue = await createKit(args)
@@ -113,7 +125,7 @@ async function runCommand(args) {
   // build
   if (init) {
     await nue.init(true)
-    if (deploy) await deployer({ root: nue.dist, init: true })
+    if (deploy) await deployer({ root: nue.dist, init })
 
   } else if (dryrun || deploy || args.paths[0] || cmd == 'build') {
     const paths = await nue.build(args.paths)
