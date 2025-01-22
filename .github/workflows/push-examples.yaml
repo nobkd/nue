@@ -6,6 +6,7 @@ on:
       - master
     paths:
       - packages/examples/**
+  workflow_dispatch:
 
 jobs:
   examples:
@@ -28,6 +29,7 @@ jobs:
 
       - name: Check dir changes
         run: git diff --name-only HEAD^ HEAD | grep -q "^${{ env.dir }}"
+        if: github.event_name != 'workflow_dispatch'
 
       # subsitutes non-alphanumeric characters with _
       - name: Build secret variable names

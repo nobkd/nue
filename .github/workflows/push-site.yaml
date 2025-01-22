@@ -6,6 +6,7 @@ on:
       - master
     paths:
       - packages/nuejs.org/**
+  workflow_dispatch:
 
 jobs:
   site:
