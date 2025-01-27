@@ -97,8 +97,7 @@ export async function buildCSS(filename, minify, opts = {}, lcss) {
       minify,
       throw: true,
       experimentalCss: true,
-      // mark basically everything but `.css` as external (TODO: find better solution to this one)
-      external: ['*.svg', '*.png', '*.jpg', '*.jpeg', '*.webp', '*.ico', '*.woff', '*.woff2', '*.ttf', '*.otf'],
+      external: ['*.[!css]'],
     })).outputs[0].text()
 
   } catch (e) {
