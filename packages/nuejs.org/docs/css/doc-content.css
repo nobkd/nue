@@ -88,3 +88,19 @@ figure:has(.above) {
   column-width: 15em;
   column-gap: 2em;
 }
+
+.copy-code {
+  float: right;
+  margin: -1em;
+  padding: 0.1em;
+  
+  &::before {
+    display: flex;
+    content: '';
+    width: 1.5em;
+    height: 2em;
+    
+    filter: invert(1);
+    background: url(/icon/document.svg) no-repeat center;
+  }
+}

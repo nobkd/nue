@@ -4,7 +4,7 @@ import { $, $$ } from '/@nue/view-transitions.js'
 let headings = []
 let clicked
 
-function setSelected(href, attr='aria-current') {
+function setSelected(href, attr = 'aria-current') {
   $(`.toc [${attr}]`)?.removeAttribute(attr)
   $(`.toc [href="${href}"]`)?.setAttribute(attr, 1)
 }
@@ -14,8 +14,8 @@ const observer = new IntersectionObserver(arr => {
     if (el.isIntersecting && !clicked) setSelected('#' + el.target.id)
   })
 
-// annoying option. too much trial & error needed
-}, { rootMargin: `0px 0px -500px 0px`})
+  // annoying option. too much trial & error needed
+}, { rootMargin: `0px 0px -500px 0px` })
 
 
 $$('.toc a').forEach(el => {
@@ -47,13 +47,21 @@ addEventListener('route', function() {
   if (el) el.checked = !!$('.zen')
 
   $$('article > h2, article > h3').forEach(el => observer.observe(el))
+
+  $$('pre').forEach(el => {
+    const copyBtn = document.createElement('button')
+    copyBtn.className = 'copy-code'
+    copyBtn.title = 'Copy code'
+    copyBtn.onclick = () => navigator.clipboard.writeText(el.lastChild.textContent)
+    el.insertBefore(copyBtn, el.firstChild) 
+  })
 })
 
 // demo
 class Counter extends HTMLDivElement {
   constructor() {
     super()
-    this.innerHTML = ++sessionStorage.counter || (sessionStorage.counter = 0)
+    this.innerHTML = ++sessionStorage.counter || (sessionStorage.counter = 0)
   }
 }
 
