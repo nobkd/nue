@@ -17,6 +17,8 @@
   },
   "scripts": {
     "css": "bun ./css/build.js",
+    "prepack": "bun ../../pack.js",
+    "postpack": "bun ../../pack.js reset",
     "test": "node --experimental-vm-modules ../../node_modules/jest/bin/jest.js --runInBand"
   },
   "jest": {

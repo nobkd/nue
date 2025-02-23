@@ -16,8 +16,10 @@
     "node": ">= 18"
   },
   "scripts": {
-    "test": "node --experimental-vm-modules ../../node_modules/jest/bin/jest.js --runInBand",
-    "compile": "bun test/compile.js"
+    "compile": "bun test/compile.js",
+    "prepack": "bun ../../pack.js",
+    "postpack": "bun ../../pack.js reset",
+    "test": "node --experimental-vm-modules ../../node_modules/jest/bin/jest.js --runInBand"
   },
   "dependencies": {
     "htmlparser2": "^10.0.0"
