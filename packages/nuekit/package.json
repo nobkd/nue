@@ -44,6 +44,9 @@
   "jest": {
     "setupFilesAfterEnv": [
       "<rootDir>/../../setup-jest.js"
+    ],
+    "collectCoverageFrom": [
+      "<rootDir>/src/**"
     ]
   }
 }
