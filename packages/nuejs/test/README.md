@@ -21,9 +21,9 @@ bun test test/test-clicks
 
 Each test has its own directory (with a name starting with `test-`) with the following files:
 
-1. `component.dhtml` - Contains one or more `.dhtml` Nue.js components
-2. `<test-name>.test.js` - The actual test file that imports the components and tests them
-3. `index.html` - An HTML file that can be used to render the components in a browser
+1. `component.dhtml` — Contains one or more `.dhtml` Nue.js components
+2. `<test-name>.test.js` — The actual test file that imports the components and tests them
+3. `index.html` — An HTML file that can be used to render the components in a browser
 
 ## Adding New Tests
 
