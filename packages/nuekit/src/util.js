@@ -18,6 +18,13 @@ export function esMain(url) {
   return realpathSync(fileURLToPath(url)) === realpathSync(process.argv[1])
 }
 
+export function upgradeNuekit(url) {
+  console.log(realpathSync(fileURLToPath(url)))
+  const pm = 'bun' // TODO: identify package manager
+  const is_global = true
+  execSync([pm, 'install', is_global ? '--global' : '', 'nuekit@latest'].join(' '))
+}
+
 // read from package.json
 export const version = await async function() {
   const path = join(srcdir, '../package.json')
