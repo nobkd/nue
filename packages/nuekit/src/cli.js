@@ -1,6 +1,9 @@
 #!/usr/bin/env bun
 
+import { execSync } from 'node:child_process'
 import { esMain, log, colors, version, getEngine, openUrl } from './util.js'
+import { realpathSync } from 'node:fs'
+import { fileURLToPath } from 'node:url'
 
 
 // [-npe] --> [-n, -p, -e]
@@ -18,7 +21,7 @@ export function expandArgs(args) {
 
 // TODO: tests
 export function getArgs(argv) {
-  const commands = ['serve', 'build', 'init', 'create', 'docs']
+  const commands = ['serve', 'build', 'init', 'create', 'docs', 'upgrade']
   const args = { paths: [], root: null }
   let opt
 
@@ -94,6 +97,14 @@ async function runCommand(args) {
   console.info('')
   await printVersion()
   args.nuekit_version = version
+
+  // upgrade nue
+  if (cmd == 'upgrade') {
+    console.log(realpathSync(fileURLToPath(import.meta.url)))
+    const pm = 'bun'
+    execSync(`${pm} install --global nuekit@latest`)
+    return
+  }
 
   // create nue
   if (cmd == 'create') {
