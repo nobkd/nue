@@ -46,7 +46,7 @@ test('renderPage', () => {
   const document = { render: () => '<h1>Hello</h1>' }
   const lib = [{ tagName: 'header', render: () => '<header>' }]
   const html = renderPage({ language: 'fi', document }, lib)
-  expect(html).toStartWith('<html lang="fi" dir="ltr">')
+  expect(html).toStartWith('<html lang="fi">')
   expect(html).toInclude('<header></header>')
   expect(html).toInclude('<h1>Hello</h1>')
 })

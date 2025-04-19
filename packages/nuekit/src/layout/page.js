@@ -24,9 +24,10 @@ const MAIN = parseNue(`
 function getPageLayout(data) {
   const { language = 'en-US', direction = 'ltr' } = data
   const body_class = data.class ? ` class="${data.class}"` : ''
+  const dir = direction == 'ltr' ? '' : ` dir=${direction}`
 
   const html = ltrim(`
-    <html lang="${language}" dir="${direction}">
+    <html lang="${language}"${dir}>
 
       <head>
         <slot for="system_head"/>
@@ -50,9 +51,10 @@ function getPageLayout(data) {
 
 export function getSPALayout(body, data) {
   const { language = 'en-US', direction = 'ltr' } = data
+  const dir = direction == 'ltr' ? '' : ` dir="${direction}"`
 
   return ltrim(`
-    <html lang="${language}" dir="${direction}">
+    <html lang="${language}"${dir}>
       <head>
         ${renderHead(data)}
       </head>
