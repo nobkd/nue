@@ -223,7 +223,7 @@ export function parseSize(data) {
 function extractData(data, all_data) {
   for (const key in data) {
     if (key.startsWith(':')) {
-      data[key.slice(1)] = all_data[data[key]]
+      data[key.slice(1)] = eval`all_data.${data[key]}`
       delete data[key]
     }
   }
