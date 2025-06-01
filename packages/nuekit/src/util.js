@@ -3,6 +3,7 @@
 import { execSync } from 'node:child_process'
 import { promises as fs, realpathSync } from 'node:fs'
 import { sep, parse, resolve, normalize, join, isAbsolute, dirname } from 'node:path'
+import { styleText, inspect } from 'node:util'
 import { fileURLToPath, pathToFileURL } from 'node:url'
 
 
@@ -45,12 +46,10 @@ log.error = function(msg, extra = "") {
 
 // console colors
 export const colors = function() {
-  const codes = { red: 31, green: 32, yellow: 33, blue: 34, magenta: 35, cyan: 36, gray: 90 }
+  const noColor = process.env.NO_COLOR || !(process.env.TERM || process.platform == 'win32') // can be removed when bun correctly handles this case in styleText
   const fns = {}
-  const noColor = process.env.NO_COLOR || !(process.env.TERM || process.platform == 'win32')
-
-  for (const key in codes) {
-    fns[key] = msg => noColor ? msg : `\u001b[${codes[key]}m${msg}\u001b[39m`
+  for (const key in inspect.colors) {
+    fns[key] = msg => noColor ? msg : styleText(key, msg)
   }
   return fns
 }()
