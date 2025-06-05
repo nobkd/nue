@@ -1,5 +1,7 @@
 import { mountAll } from './mount.js'
 
+
+// not using a ws connection, not both sender & receiver... need ws for passing errors to terminal?
 const sse = new EventSource(location.origin)
 
 const $$ = (query, root = document) => [...root.querySelectorAll(query)]
@@ -9,6 +11,9 @@ const $ = (query, root = document) => root.querySelector(query)
 sse.onmessage = async function(e) {
   const data = e.data ? JSON.parse(e.data) : {}
   const { error, html, css, dir, url, path } = data
+
+
+  console.log(data)
 
   // big change -> full reload
   if (data.site_updated) return location.reload()
