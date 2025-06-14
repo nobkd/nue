@@ -272,6 +272,18 @@ test('basic page generation', async () => {
   expect(html).toInclude('<p>World</p>')
 })
 
+test('basic utf-8 page generation', async () => {
+  await write('index.md', '# テスト')
+  const kit = await getKit()
+
+  // page data
+  const data = await kit.getPageData('index.md')
+  expect(data.title).toBe('テスト')
+
+  // generated HTML
+  const html = await kit.gen('index.md')
+  expect(html).toInclude('<h1>テスト</h1>')
+})
 
 test('simple custom tag', async () => {
   await write('layout.html', '<a @name="test">Hey</a>')
