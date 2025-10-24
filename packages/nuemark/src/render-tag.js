@@ -1,10 +1,18 @@
 
-import { join, extname } from 'node:path'
-import { readFileSync } from 'node:fs'
 
 import { sectionize } from './parse-document.js'
 import { elem, renderBlocks } from './render-blocks.js'
 import { renderInline } from './render-inline.js'
+
+
+async function readFile(pth) {
+  if (typeof window == 'object') {
+    return await (await fetch(pth)).text()
+  } else {
+    const { readFile } = await import('node:fs/promises')
+    return await readFile(pth, 'utf-8')
+  }
+}
 
 
 // built-in tags
@@ -140,18 +148,19 @@ const TAGS = {
 }
 
 
-export function readIcon(path, icon_dir) {
+export async function readIcon(path, icon_dir) {
   if (!path.endsWith('.svg')) {
     path += '.svg'
-    if (icon_dir && path[0] != '/') path = join(icon_dir, path)
+    if (icon_dir && path[0] != '/') path = [icon_dir, path].join('/')
   }
 
-  path = join('.', path)
+  path = ['.', path].join('')
 
   try {
-    const svg = readFileSync(path, 'utf-8')
+    const svg = await readFile(path)
     return svg.replace('<svg', '<svg class="icon"')
   } catch (e) {
+    console.error(e)
     console.error('svg not found', path)
     return ''
   }
@@ -210,7 +219,7 @@ const MIME = {
 }
 
 function getMimeType(path = '') {
-  const type = extname(path).slice(1)
+  const type = path.split('.').at(-1)
   return type ? MIME[type] || `image/${type}` : 'text/html'
 }
 
